@@ -1,0 +1,25 @@
+name: DevOps Lab CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run Selenium Tests
+        run: mvn test
+
+      - name: Build Docker Image
+        run: docker build -t devops-lab:v1 .
